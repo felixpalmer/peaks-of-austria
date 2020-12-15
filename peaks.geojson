@@ -1,0 +1,18 @@
+{
+  "type": "FeatureCollection",
+  "features": [
+    {
+      "type": "Feature",
+      "properties": {
+        "name": "Großglockner",
+        "image": "Großglockner"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          12.694444, 47.074167
+        ]
+      }
+    }
+  ]
+}
