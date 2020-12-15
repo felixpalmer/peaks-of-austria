@@ -3,6 +3,7 @@ const container = document.getElementById( 'container' );
 const peakList = document.getElementById( 'peak-list' );
 const peakListOverlay = document.getElementById( 'peak-list-overlay' );
 const title = document.getElementById( 'title' );
+const subtitle = document.getElementById( 'subtitle' );
 
 // Define API Keys (replace these with your own!)
 const NASADEM_APIKEY = null;
@@ -31,10 +32,11 @@ Procedural.setZoomControlVisible( true );
 
 // Define function for loading a given peak
 function loadPeak( feature ) {
-  const name = feature.properties.name;
+  const { name, height } = feature.properties;
   const [longitude, latitude] = feature.geometry.coordinates;
   Procedural.displayLocation( { latitude, longitude } );
   title.innerHTML = name;
+  subtitle.innerHTML = `${height}m`;
   peakListOverlay.classList.add( 'hidden' );
 }
 
@@ -47,12 +49,13 @@ title.addEventListener( 'click', () => {
 fetch( 'peaks.geojson' )
   .then( data => data.json() )
   .then( peaks => {
-    peaks.features.forEach( peak => {
+    peaks.features.forEach( (peak, i) => {
       const li = document.createElement( 'li' );
       const p = document.createElement( 'p' );
       p.innerHTML = peak.properties.name;
       li.appendChild( p );
-      li.style.backgroundImage = `url(images/${peak.properties.image}.jpg)`;
+      // For now just have 10 preview images
+      li.style.backgroundImage = `url(images/${i % 10}.jpg)`;
       peakList.appendChild( li );
       li.addEventListener( 'click', () => loadPeak( peak ) );
     } );
