@@ -96,27 +96,29 @@ fetch( 'peaks.geojson' )
       li.style.backgroundImage = `url(images/${i % 10}.jpg)`;
       peakList.appendChild( li );
       li.addEventListener( 'click', () => loadPeak( peak ) );
-
-      // Add overlay showing all peaks
-      const overlay = {
-        "name": "dots",
-        "type": "FeatureCollection",
-        "features": peaks.features.map( (feature, i) => ( {
-          "id": i,
-          "type": "Feature",
-          "geometry": feature.geometry,
-          "properties": {
-            "name": i + 1,
-            "background": "rgba(35,46,50,1)",
-            "borderRadius": 8,
-            "padding": 6,
-          }
-        } ) )
-      }
-      Procedural.addOverlay( overlay );
     } );
 
+    // Add overlay showing all peaks
+    const overlay = {
+      "name": "dots",
+      "type": "FeatureCollection",
+      "features": peaks.features.map( (feature, i) => ( {
+        "id": i,
+        "type": "Feature",
+        "geometry": feature.geometry,
+        "properties": {
+          "name": i + 1,
+          "background": "rgba(35,46,50,1)",
+          "borderRadius": 8,
+          "padding": 6,
+        }
+      } ) )
+    }
+    Procedural.addOverlay( overlay );
+
+    // Move view to peak when marker clicked
     Procedural.onFeatureClicked = id => {
-      loadPeak( peaks.features[ id ] );
+      const peak = peaks.features[ id ];
+      if ( peak ) { loadPeak( peak ) }
     }
   } );
