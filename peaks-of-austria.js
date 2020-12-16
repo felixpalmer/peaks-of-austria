@@ -90,7 +90,7 @@ fetch( 'peaks.geojson' )
       p.innerHTML = peak.properties.name;
       li.appendChild( p );
       p = document.createElement( 'p' );
-      p.innerHTML = i;
+      p.innerHTML = i + 1;
       li.appendChild( p );
       // For now just have 10 preview images
       li.style.backgroundImage = `url(images/${i % 10}.jpg)`;
@@ -106,7 +106,7 @@ fetch( 'peaks.geojson' )
           "type": "Feature",
           "geometry": feature.geometry,
           "properties": {
-            "name": i,
+            "name": i + 1,
             "background": "rgba(35,46,50,1)",
             "borderRadius": 8,
             "padding": 6,
