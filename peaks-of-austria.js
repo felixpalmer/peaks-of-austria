@@ -40,7 +40,7 @@ function loadPeak( feature ) {
   peakListOverlay.classList.add( 'hidden' );
 
   const overlay = {
-    "id": "peak",
+    "name": "peak",
     "type": "FeatureCollection",
     "features": [
       {
@@ -49,10 +49,10 @@ function loadPeak( feature ) {
         "properties": {
           "name": `${name}`,
           "background": "rgba(35,46,50,1)",
-          "borderRadius": 6,
+          "borderRadius": 8,
           "fontSize": 18,
           "padding": 10,
-          "anchorOffset": { "y": 50, "x": 0 }
+          "anchorOffset": { "y": 86, "x": 0 }
         }
       },
       {
@@ -61,7 +61,8 @@ function loadPeak( feature ) {
         "properties": {
           "color": "rgba(255, 255, 255, 0.5)",
           "fontSize": 30,
-          "name": "|"
+          "name": "|",
+          "anchorOffset": { "y": 36, "x": 0 }
         }
       }
     ]
@@ -79,14 +80,43 @@ title.addEventListener( 'click', () => {
 fetch( 'peaks.geojson' )
   .then( data => data.json() )
   .then( peaks => {
+    // Display first peak
+    const [longitude, latitude] = peaks.features[ 0 ].geometry.coordinates;
+    Procedural.displayLocation( { latitude, longitude } );
+
     peaks.features.forEach( (peak, i) => {
       const li = document.createElement( 'li' );
-      const p = document.createElement( 'p' );
+      let p = document.createElement( 'p' );
       p.innerHTML = peak.properties.name;
+      li.appendChild( p );
+      p = document.createElement( 'p' );
+      p.innerHTML = i;
       li.appendChild( p );
       // For now just have 10 preview images
       li.style.backgroundImage = `url(images/${i % 10}.jpg)`;
       peakList.appendChild( li );
       li.addEventListener( 'click', () => loadPeak( peak ) );
+
+      // Add overlay showing all peaks
+      const overlay = {
+        "name": "dots",
+        "type": "FeatureCollection",
+        "features": peaks.features.map( (feature, i) => ( {
+          "id": i,
+          "type": "Feature",
+          "geometry": feature.geometry,
+          "properties": {
+            "name": i,
+            "background": "rgba(35,46,50,1)",
+            "borderRadius": 8,
+            "padding": 6,
+          }
+        } ) )
+      }
+      Procedural.addOverlay( overlay );
     } );
+
+    Procedural.onFeatureClicked = id => {
+      loadPeak( peaks.features[ id ] );
+    }
   } );

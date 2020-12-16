@@ -78,6 +78,7 @@ h2 {
 }
 
 #peak-list li {
+  position: relative;
   color: white;
   cursor: pointer;
   list-style: none;
@@ -92,4 +93,16 @@ h2 {
   font-weight: 100;
   background: #232e32;
   padding: 6px 10px 6px 40px;
+}
+
+#peak-list p:last-child {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  padding: 5px 8px;
+  text-align: center;
+  border-radius: 6px;
+  font-size: 12px;
+  margin: 0;
+  line-height: normal;
 }
