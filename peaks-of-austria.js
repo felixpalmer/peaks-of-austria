@@ -69,6 +69,7 @@ function loadPeak( feature ) {
   }
 
   Procedural.addOverlay( overlay );
+  setTimeout( () => Procedural.orbitTarget(), 1000 );
 }
 
 // Show list when title clicked
