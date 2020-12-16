@@ -38,6 +38,36 @@ function loadPeak( feature ) {
   title.innerHTML = name;
   subtitle.innerHTML = `${height}m`;
   peakListOverlay.classList.add( 'hidden' );
+
+  const overlay = {
+    "id": "peak",
+    "type": "FeatureCollection",
+    "features": [
+      {
+        "type": "Feature",
+        "geometry": feature.geometry,
+        "properties": {
+          "name": `${name}`,
+          "background": "rgba(35,46,50,1)",
+          "borderRadius": 6,
+          "fontSize": 18,
+          "padding": 10,
+          "anchorOffset": { "y": 50, "x": 0 }
+        }
+      },
+      {
+        "type": "Feature",
+        "geometry": feature.geometry,
+        "properties": {
+          "color": "rgba(255, 255, 255, 0.5)",
+          "fontSize": 30,
+          "name": "|"
+        }
+      }
+    ]
+  }
+
+  Procedural.addOverlay( overlay );
 }
 
 // Show list when title clicked
