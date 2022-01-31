@@ -26,7 +26,7 @@ Procedural.init( { container, datasource } );
 
 // Configure buttons for UI
 Procedural.setCameraModeControlVisible( true );
-Procedural.setCompassVisible( false );
+Procedural.setCompassVisible( true );
 Procedural.setRotationControlVisible( true );
 Procedural.setZoomControlVisible( true );
 
